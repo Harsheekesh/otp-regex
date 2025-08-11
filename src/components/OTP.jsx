@@ -5,6 +5,12 @@ export default function OTP({ otpLength = 6 }) {
   const [otpFields, setOtpFields] = useState(new Array(otpLength).fill(""));
   const ref = useRef([]);
 
+  // Add mobile touch handler
+  const handleTouchStart = (e, index) => {
+    e.preventDefault();
+    ref.current[index]?.focus();
+  };
+
   function handleKeyDown(e, index) {
     const key = e.key;
     const copyOtpFields = [...otpFields];
@@ -46,13 +52,12 @@ export default function OTP({ otpLength = 6 }) {
     if (index + 1 < otpFields.length) {
       ref.current[index + 1].focus();
     } else {
-      // Auto submit when last digit is entered
       const otp = copyOtpFields.join("");
       if (otp.length === otpLength && /^\d+$/.test(otp)) {
         setTimeout(() => {
           alert(`OTP Submitted: ${otp}`);
           resetOTP();
-        }, 150); // Small delay to show last digit before reset
+        }, 150);
       }
     }
   }
@@ -74,7 +79,6 @@ export default function OTP({ otpLength = 6 }) {
     const nextFocus = digits.length < otpLength ? digits.length : otpLength - 1;
     ref.current[nextFocus]?.focus();
 
-    // Auto submit if all fields are filled via paste
     if (nextOtp.join("").length === otpLength) {
       setTimeout(() => {
         alert(`OTP Submitted: ${nextOtp.join("")}`);
@@ -105,7 +109,13 @@ export default function OTP({ otpLength = 6 }) {
           className="otp-input"
           onKeyDown={(e) => handleKeyDown(e, index)}
           onPaste={handlePaste}
-          onChange={() => {}} // Needed to suppress React warning
+          onChange={() => {}} // Suppress warning
+          // Mobile-specific additions:
+          inputMode="numeric"
+          pattern="[0-9]*"
+          autoComplete="one-time-code"
+          onTouchStart={(e) => handleTouchStart(e, index)}
+          onClick={(e) => e.target.setSelectionRange(0, 1)}
         />
       ))}
     </div>
