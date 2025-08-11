@@ -15,7 +15,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "postbuild": "mv build ../build || move build ..\\build",  // Fix for Render
+    "postbuild": "mv build ../build || move build ..\\build",  
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
