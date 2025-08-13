@@ -26,4 +26,8 @@ Live Link : https://otp-regex-harsheekesh.onrender.com
 
 ---
 
-## 📂 Project Structure
+## ✨ Author
+Harsheekesh Tiwari
+
+- **GitHub:** @Harsheekesh
+- **LinkedIn:** https://www.linkedin.com/in/harsheekesh-tiwari-01a697292
